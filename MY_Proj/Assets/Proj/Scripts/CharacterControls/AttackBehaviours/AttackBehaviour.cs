@@ -6,6 +6,11 @@ namespace Proj.CharacterControls.AttackBehaviours
 {
     public abstract class AttackBehaviour : MonoBehaviour
     {
+#if UNITY_EDITOR
+        [Multiline]
+        public string devDescription = "description!";
+#endif
+
         public int animationIndex;
         public int priority;
         public int damage;

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{ad04d563-1661-4bf9-6d33-eb03222dcee0}</ProjectGuid>
+    <ProjectGuid>{ab4a7347-c656-3c2e-ea3b-8e668361635e}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -88,17 +88,22 @@
      <Compile Include="Assets\Proj\Scripts\CameraControls\MainCameraControl.cs" />
      <Compile Include="Assets\Proj\Scripts\CameraControls\MainCameraScreenEditor.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\AttackBehaviours\AttackBehaviour.cs" />
+     <Compile Include="Assets\Proj\Scripts\CharacterControls\AttackBehaviours\AttackBehaviourMelee.cs" />
+     <Compile Include="Assets\Proj\Scripts\CharacterControls\AttackBehaviours\AttackBehaviourProjectile.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\CharacterControllerCharacterControl.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\EnemyControllerLich.cs" />
+     <Compile Include="Assets\Proj\Scripts\CharacterControls\ManualCollision.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\RigidbodyCharacterControl.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\States\IAttackable.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\States\IDamagable.cs" />
      <Compile Include="Assets\Proj\Scripts\FieldOfVisions\FieldOfVision.cs" />
      <Compile Include="Assets\Proj\Scripts\FieldOfVisions\FieldOfVisionEditor.cs" />
+     <Compile Include="Assets\Proj\Scripts\Projectiles\Projectile.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachineBehaviours\EnemyAttackStateMachineBehaviourLich.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachineBehaviours\IdleRandomStateMachineBehaviour.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\AttackState.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\AttackStateController.cs" />
+     <Compile Include="Assets\Proj\Scripts\StateMachines\DeadState.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\IdleState.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\MoveState.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\PatrolState.cs" />
@@ -695,41 +700,41 @@
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+        <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="sc.vegetationspawner.editor.csproj">
-      <Project>{bff70ca7-f551-9c65-2e72-0a4d85767e3f}</Project>
+      <Project>{6f4e645f-6faa-f909-1180-faac2b18c28a}</Project>
       <Name>sc.vegetationspawner.editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="sc.vegetationspawner.runtime.csproj">
-      <Project>{debc6580-581e-780c-1a6e-aa2bfe9d039a}</Project>
+      <Project>{b6ea5316-b435-497c-456c-d4998a7745d4}</Project>
       <Name>sc.vegetationspawner.runtime</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

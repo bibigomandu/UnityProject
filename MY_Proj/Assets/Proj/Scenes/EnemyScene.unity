@@ -209,6 +209,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789f7f8c949cc7b44ba90d37d36eabdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePoint: {fileID: 0}
+  attackBehaviours:
+  - {fileID: 507811164}
+  hitTransform: {fileID: 0}
+  maxHealth: 100
+  health: 0
   weaponCollider: {fileID: 0}
   hitEffect: {fileID: 0}
   viewRadius: 5
@@ -278,6 +284,46 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 311
+--- !u!4 &507811163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400048, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 507811157}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &507811164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507811158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017ca5e4fb4a478458b720a84c61b1f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  devDescription: description!
+  animationIndex: 0
+  priority: 0
+  damage: 5
+  range: 1.5
+  effectPrefab: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 512
+  attackCollision: {fileID: 1287131751}
+--- !u!114 &507811165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507811158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be99f048ad755234fa1f74b809b5a920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +517,50 @@ MonoBehaviour:
   angle: 45
   headHeight: 2
   target: {fileID: 543450652849588045}
+--- !u!1 &1287131749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287131750}
+  - component: {fileID: 1287131751}
+  m_Layer: 0
+  m_Name: MeleeAttackCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1287131750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287131749}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 507811163}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1287131751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287131749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f268506d67289354db7ae3150eb12080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxSize: {x: 3, y: 2, z: 1.5}
 --- !u!1 &1503456727
 GameObject:
   m_ObjectHideFlags: 0
