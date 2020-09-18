@@ -15,9 +15,9 @@ namespace Proj.CharacterControls.AttackBehaviours
         public int priority;
         public int damage;
         public float range = 3f;
-        private float coolTime;
+        public float coolTime;
         public GameObject effectPrefab;
-        protected float calcCoolTime = 0.0f;
+        public float calcCoolTime = 0.0f;
         public LayerMask targetMask;
         public bool IsAvailable => calcCoolTime >= coolTime;
 

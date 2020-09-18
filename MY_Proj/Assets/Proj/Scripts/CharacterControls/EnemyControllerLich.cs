@@ -131,17 +131,14 @@ namespace Proj.CharacterControls
         }
 
         private void CheckAttackBehaviour() {
-            if(CurrentAttackBehaviour == null || !CurrentAttackBehaviour.IsAvailable)
-            {
-                CurrentAttackBehaviour = null;
+            CurrentAttackBehaviour = null;
 
-                foreach(AttackBehaviour behaviour in attackBehaviours)
+            foreach(AttackBehaviour behaviour in attackBehaviours)
+            {
+                if(behaviour.IsAvailable)
                 {
-                    if(behaviour.IsAvailable)
-                    {
-                        if((CurrentAttackBehaviour == null) || (CurrentAttackBehaviour.priority < behaviour.priority)) {
-                            CurrentAttackBehaviour = behaviour;
-                        }
+                    if(CurrentAttackBehaviour == null || CurrentAttackBehaviour.priority < behaviour.priority) {
+                        CurrentAttackBehaviour = behaviour;
                     }
                 }
             }
@@ -159,6 +156,7 @@ namespace Proj.CharacterControls
         {
             if(CurrentAttackBehaviour != null && Target != null)
             {
+                projectilePoint = transform;
                 CurrentAttackBehaviour.ExecuteAttack(Target.gameObject, projectilePoint);
             }
         }
