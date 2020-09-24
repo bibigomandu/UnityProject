@@ -8,6 +8,7 @@ namespace Proj.CharacterControls.AttackBehaviours
 {
     public class AttackBehaviourMelee : AttackBehaviour
     {
+        public float effectTime = 0.1f;
         public ManualCollision attackCollision;
 
         public override void ExecuteAttack(GameObject target = null, Transform startPoint = null)
@@ -20,6 +21,17 @@ namespace Proj.CharacterControls.AttackBehaviours
             }
 
             calcCoolTime = 0.0f;
+
+            MakeEffect();
+        }
+
+        public void MakeEffect()
+        {
+            if(effectPrefab != null)
+            {
+                GameObject attackEffectGO = GameObject.Instantiate<GameObject>(effectPrefab, transform.position, Quaternion.identity);
+                Destroy(attackEffectGO, effectTime);
+            }
         }
     }
 }

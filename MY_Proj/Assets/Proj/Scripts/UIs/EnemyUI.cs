@@ -33,7 +33,9 @@ namespace Proj.UIs
             get => hpSlider.value;
             set
             {
-                hpSlider.value = value;
+                if(value <= hpSlider.minValue)      hpSlider.value = hpSlider.minValue;
+                else if(value >= hpSlider.maxValue) hpSlider.value = hpSlider.maxValue;
+                else                                hpSlider.value = value;
             }
         }
 

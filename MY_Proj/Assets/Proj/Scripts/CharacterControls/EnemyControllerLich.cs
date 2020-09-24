@@ -6,6 +6,7 @@ using Proj.StateMachines;
 using Proj.FieldOfVisions;
 using Proj.CharacterControls.States;
 using Proj.CharacterControls.AttackBehaviours;
+using Proj.UIs;
 
 namespace Proj.CharacterControls
 {
@@ -14,6 +15,7 @@ namespace Proj.CharacterControls
         public Transform projectilePoint;
         public List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
         public Transform hitTransform;
+        public EnemyUI hpBar;
         public int maxHealth = 100;
         public int health;
         public int Health {
@@ -42,6 +44,17 @@ namespace Proj.CharacterControls
         void Start()
         {
             health = maxHealth;
+
+            if(hpBar != null)
+            {
+                hpBar = hpBar.GetComponent<EnemyUI>();
+                if(hpBar != null)
+                {
+                    hpBar.MinimumValue = 0.0f;
+                    hpBar.MaximumValue = maxHealth;
+                    hpBar.value = health;
+                }
+            }
 
             stateMachine = new StateMachine<EnemyControllerLich>(this, new IdleState());
             stateMachine.AddState(new MoveState());
@@ -166,9 +179,16 @@ namespace Proj.CharacterControls
         public bool IsAlive => (health > 0);
 
         public void TakeDamage(int damage, GameObject hitEffectPrefab) {
+            Debug.Log("Lich TakeDamage : " + damage);
             if(!IsAlive)    return;
 
             health -= damage;
+
+            if(hpBar)
+            {
+                hpBar.value = health;
+                hpBar.TakeDamage(damage);
+            }
 
             if(hitEffectPrefab)
             {

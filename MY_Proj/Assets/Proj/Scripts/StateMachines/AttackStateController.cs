@@ -46,6 +46,7 @@ namespace Proj.StateMachines
             //
         }
 
+        // Add an event that calls this method to animations.
         public void OnCheckAttackCollider(int attackIndex)
         {
             GetComponent<IAttackable>()?.OnExecuteAttack(attackIndex);
