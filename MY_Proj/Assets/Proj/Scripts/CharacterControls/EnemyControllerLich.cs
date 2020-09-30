@@ -12,6 +12,7 @@ namespace Proj.CharacterControls
 {
     public class EnemyControllerLich : MonoBehaviour, IAttackable, IDamagable
     {
+#region
         public Transform projectilePoint;
         public List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
         public Transform hitTransform;
@@ -38,6 +39,7 @@ namespace Proj.CharacterControls
 
         public Transform Target => fov.NearestTarget;
         public LayerMask TargetMask => fov.targetMask;
+#endregion
 
 #region Unity Methods
         // Start is called before the first frame update

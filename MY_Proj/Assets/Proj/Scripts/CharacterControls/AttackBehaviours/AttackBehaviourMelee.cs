@@ -8,7 +8,7 @@ namespace Proj.CharacterControls.AttackBehaviours
 {
     public class AttackBehaviourMelee : AttackBehaviour
     {
-        public float effectTime = 0.1f;
+        public float effectTime = 0.2f;
         public ManualCollision attackCollision;
 
         public override void ExecuteAttack(GameObject target = null, Transform startPoint = null)
