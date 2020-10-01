@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{A70CF7BF-51F5-659C-2E72-0A4D85767E3F}</ProjectGuid>
+    <ProjectGuid>{5F644E6F-AA6F-09F9-1180-FAAC2B18C28A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>sc.vegetationspawner.editor</AssemblyName>
@@ -260,7 +260,7 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -623,21 +623,21 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="sc.vegetationspawner.runtime.csproj">
-      <Project>{8065BCDE-1E58-0C78-1A6E-AA2BFE9D039A}</Project>
+      <Project>{1653EAB6-35B4-7C49-456C-D4998A7745D4}</Project>
       <Name>sc.vegetationspawner.runtime</Name>
     </ProjectReference>
   </ItemGroup>

@@ -7,12 +7,25 @@ namespace Proj.CameraControls
     public class MainCameraControl : MonoBehaviour
     {
         [Header("Properties about camera control.")]
-        public float height = 7f;
-        public float distance = 8f;
-        [Tooltip("Horizontal angle.")]
-        [Range(30f, 60f)]
-        public float angle = 45f;
-        public float headHeight = 2f;
+        [Range(2f, 4f)]
+        public float distance = 3f;
+        private float minDistance = 2f;
+        private float maxDistance = 4f;
+
+        [Tooltip("Character stature.")] // stature = 키.
+        [Range(1f, 2f)]
+        public float characterStature = 2f;
+
+        [Range(5f, 10f)]
+        public float rotateSpeed = 10.0f;
+        // 60 - 0(360) - 300
+        private float downVerticalRotLimit = 60f;
+        private float upVerticalRotLimit = 300f;
+
+        [Range(5f, 10f)]
+        public float zoomSpeed = 10.0f;
+
+        [Tooltip("Player")]
         public Transform target;
 
         private void LateUpdate()
@@ -24,25 +37,55 @@ namespace Proj.CameraControls
         {
             if(!target) return;
 
-            // 타겟과 카메라 간의 위치 차이.
-            Vector3 positionCorrect = (Vector3.forward * -distance) + (Vector3.up * height);
-            // Debug.DrawLine(target.position, positionCorrect, Color.red);
+            ChangeDistance();
+            ChangeRotation();
+            ChangePosition();
+        }
 
-            // 타겟-카메라 위치 차이에 회전 적용.
-            Vector3 rotatedPositionCorrect = Quaternion.AngleAxis(angle, Vector3.up) * positionCorrect;
-            // Debug.DrawLine(target.position, rotatedPositionCorrect, Color.green);
+        private void ChangeDistance()
+        {
+            // 마우스 휠을 스크롤해 카메라와 캐릭터 사이의 거리를 변경.
+            float deltaDist = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            distance += deltaDist;
+            if(distance < minDistance)  distance = minDistance;
+            if(distance > maxDistance)  distance = maxDistance;
+        }
 
-            // 캐릭터의 머리를 바라본다.
-            Vector3 lookAtPosition = target.position;
-            lookAtPosition.y += headHeight;
+        private void ChangeRotation()
+        {
+            float deltaVerticalRot = Input.GetAxis("Mouse Y") * -1 * rotateSpeed;
+            float deltaHorizontalRot = Input.GetAxis("Mouse X") * rotateSpeed;
 
-            // 카메라 새 위치.
-            Vector3 cameraPosition = lookAtPosition + rotatedPositionCorrect;
-            // Debug.DrawLine(target.position, cameraPosition, Color.blue);
+            Vector3 rot = transform.rotation.eulerAngles;
+            rot.x += deltaVerticalRot;
+            rot.y += deltaHorizontalRot;
 
-            // 위치 변경 후 캐릭터(머리)를 바라보도록 회전.
-            transform.position = cameraPosition;
-            transform.LookAt(lookAtPosition);
+            // rotation의 x(수직회전) 값을 지정된 범위를 벗어나지 않도록 처리.
+            // 60(downVerticalRotLimit) - 0(360) - 300(upVerticalRotLimit)
+            rot.x %= 360;
+
+            if(downVerticalRotLimit < rot.x && rot.x <= 180)
+            {
+                rot.x = downVerticalRotLimit;
+            }
+            else if(180 <= rot.x && rot.x < upVerticalRotLimit)
+            {
+                rot.x = upVerticalRotLimit;
+            }
+            
+            Quaternion newRot = Quaternion.Euler(rot);
+            transform.rotation = newRot;
+        }
+
+        private void ChangePosition()
+        {
+            // 카메라가 캐릭터를 뒤에서 바라보도록 position 변경.
+            Vector3 normRot = transform.forward.normalized;
+            Vector3 positionDiff = normRot * -distance;
+
+            // 캐릭터 키를 고려해 y값 수정.
+            positionDiff.y += characterStature;
+            transform.position = positionDiff + target.position;
         }
     }
 }

@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8065BCDE-1E58-0C78-1A6E-AA2BFE9D039A}</ProjectGuid>
+    <ProjectGuid>{1653EAB6-35B4-7C49-456C-D4998A7745D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>sc.vegetationspawner.runtime</AssemblyName>
@@ -614,10 +614,10 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

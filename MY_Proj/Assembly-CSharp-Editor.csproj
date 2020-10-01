@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{05ACD5FE-B01E-B2B7-68F6-7DE9BC3A0EE0}</ProjectGuid>
+    <ProjectGuid>{911B9745-6FC3-A1B9-B677-4617AA8ABCA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -292,7 +292,7 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -655,50 +655,50 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Chapter-01-02/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>F:/study/Unity/FastCampus_PortAIO_DIA/MY_Proj/UnityProject/MY_Proj/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{63D504AD-6116-F94B-6D33-EB03222DCEE0}</Project>
+      <Project>{47734AAB-56C6-2E3C-EA3B-8E668361635E}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="sc.vegetationspawner.editor.csproj">
-      <Project>{A70CF7BF-51F5-659C-2E72-0A4D85767E3F}</Project>
+      <Project>{5F644E6F-AA6F-09F9-1180-FAAC2B18C28A}</Project>
       <Name>sc.vegetationspawner.editor</Name>
     </ProjectReference>
     <ProjectReference Include="sc.vegetationspawner.runtime.csproj">
-      <Project>{8065BCDE-1E58-0C78-1A6E-AA2BFE9D039A}</Project>
+      <Project>{1653EAB6-35B4-7C49-456C-D4998A7745D4}</Project>
       <Name>sc.vegetationspawner.runtime</Name>
     </ProjectReference>
   </ItemGroup>
