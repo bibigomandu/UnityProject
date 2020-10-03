@@ -3,67 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Proj.UIs
-{
-    public class EnemyUI : MonoBehaviour
-    {
+namespace Proj.UIs {
+    public class EnemyUI : MonoBehaviour {
         private Slider hpSlider;
         public GameObject damageTextPrefab;
 
-        public float MinimumValue
-        {
+        public float MinimumValue {
             get => hpSlider.minValue;
-            set
-            {
+            set {
                 hpSlider.minValue = value;
             }
         }
 
-        public float MaximumValue
-        {
+        public float MaximumValue {
             get => hpSlider.maxValue;
-            set
-            {
+            set {
                 hpSlider.maxValue = value;
             }
         }
 
-        public float value
-        {
+        public float value {
             get => hpSlider.value;
-            set
-            {
+            set {
                 if(value <= hpSlider.minValue)      hpSlider.value = hpSlider.minValue;
                 else if(value >= hpSlider.maxValue) hpSlider.value = hpSlider.maxValue;
                 else                                hpSlider.value = value;
             }
         }
 
-        private void Awake()
-        {
+        private void Awake() {
             hpSlider = gameObject.GetComponentInChildren<Slider>();
         }
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             GetComponent<Canvas>().enabled = true;
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             GetComponent<Canvas>().enabled = false;
         }
 
-        public void TakeDamage(int damage)
-        {
-            if(damageTextPrefab != null)
-            {
+        public void TakeDamage(int damage) {
+            if(damageTextPrefab != null) {
                 GameObject damageTextGO = Instantiate(damageTextPrefab, transform);
                 DamageText damageText = damageTextGO.GetComponent<DamageText>();
                 if(damageText == null)
-                {
                     Destroy(damageTextGO);
-                }
 
                 damageText.Damage = damage;
             }

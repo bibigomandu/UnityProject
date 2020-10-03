@@ -3,36 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using Proj.CharacterControls.AttackBehaviours;
 using Proj.CharacterControls.States;
 using Proj.StateMachines;
 
-namespace Proj.CharacterControls
-{
-    public class PlayerControl : MonoBehaviour, IAttackable, IDamagable
-    {
+namespace Proj.CharacterControls {
+    public class PlayerControl : MonoBehaviour, IAttackable, IDamagable {
 #region
         public List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
-        private CharacterController characterController;
-        private NavMeshAgent agent;
         private Camera mainCamera;
         public Animator animator;
-        public LayerMask groundLayerMask;
         public LayerMask targetMask;
-        public Transform target;
         private Transform hitPoint;
-        public GameObject mouseEffectPrefab;
+        private Rigidbody rigidbody_;
 
+        bool isOnUI; // UI위에 마우스 커서가 위치했는지.
         public float maxHp = 100.0f;
         public float hp;
-        public float mouseEffectTime = 0.2f;
-        public float defaultStoppingDistance = 0.1f;
+        [Range(15f, 30f)]
+        public float moveSpeed = 20f;
         public bool IsInAttackState => GetComponent<AttackStateController>()?.IsInAttackState ?? false;
 #endregion
 
 #region     Animator Hashes
         readonly int moveHash           = Animator.StringToHash("Move");
-        readonly int moveSpeedHash      = Animator.StringToHash("MoveSpeed");
         readonly int fallingHash        = Animator.StringToHash("Falling");
         readonly int attackTriggerHash  = Animator.StringToHash("AttackTrigger");
         readonly int attackIndexHash    = Animator.StringToHash("AttackIndex");
@@ -41,241 +36,117 @@ namespace Proj.CharacterControls
 #endregion  Animator Hashes
 
 #region     Main Methods
-        void Start()
-        {
-            characterController = GetComponent<CharacterController>();
-            agent = GetComponent<NavMeshAgent>();
-
-            agent.updatePosition = false;
-            agent.updateRotation = true;
-
+        void Start() {
+            rigidbody_ = GetComponent<Rigidbody>();
             mainCamera = Camera.main;
-
             hp = maxHp;
 
             InitAttackBehaviour();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if(!IsAlive)
-            {
-                return;
-            }
+        void Update() {
+            // 중력.
+            // Rigidbody가 있음에도 중력이 적용이 안 되는 기현상.
+            rigidbody_.AddForce(Vector3.down * 500f, ForceMode.Acceleration);
+            if(!IsAlive) return;
 
-            CheckAttackBehaviour();
+            CheckOnUI();
 
-            // Left button.
-            if(Input.GetMouseButtonDown(0) && !IsInAttackState)
-            {
-                // Get world position corresponding to mouse pointer.
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+            if(CheckAttackInput()) {
+                Stop();
 
-                if(Physics.Raycast(ray, out hit, 300, groundLayerMask))
-                {
-                    RemoveTarget();
-
-                    agent.SetDestination(hit.point);
-
-                    if(mouseEffectPrefab != null)
-                    {
-                        GameObject attackEffectGO = GameObject.Instantiate<GameObject>(mouseEffectPrefab, hit.point, Quaternion.identity);
-                        Destroy(attackEffectGO, mouseEffectTime);
-                    }
+                if(Input.GetMouseButtonDown(0) && attackBehaviours[0].IsAvailable) {
+                    Attack(0); // Left button.
+                } else if(Input.GetMouseButtonDown(1) && attackBehaviours[1].IsAvailable) {
+                    Attack(1); // Right button.
                 }
-            }
-            else if(Input.GetMouseButtonDown(1)) // Right button.
-            {
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if(Physics.Raycast(ray, out hit, 300))
-                {
-                    IDamagable damagable = hit.collider.GetComponent<IDamagable>();
-                    if(damagable != null && damagable.IsAlive)
-                    {
-                        SetTarget(hit.collider.transform);
-                    }
-                }
-            }
-
-            if(target != null)
-            {
-                if(!(target.GetComponent<IDamagable>()?.IsAlive ?? false))
-                {
-                    RemoveTarget();
-                }
-                else
-                {
-                    agent.SetDestination(target.position);
-                    FaceToTarget();
-                }
-            }
-
-            // Animation 제어.
-            if(agent.remainingDistance > agent.stoppingDistance)
-            {
-                characterController.Move(agent.velocity * Time.deltaTime);
-                animator.SetFloat(moveSpeedHash, agent.velocity.magnitude / agent.speed, .1f, Time.deltaTime);
-                animator.SetBool(moveHash, true);
-            }
+            } else if(CheckMoveInput() && !IsInAttackState)
+                Move();
             else
-            {
-                characterController.Move(agent.velocity * Time.deltaTime);
-                animator.SetFloat(moveSpeedHash, 0);
-                animator.SetBool(moveHash, false);
-                agent.ResetPath();
-            }
-
-            if (agent.isOnOffMeshLink)
-            {
-                animator.SetBool(fallingHash, agent.velocity.y != 0.0f);
-            }
-            else
-            {
-                animator.SetBool(fallingHash, false);
-            }
-
-            AttackTarget();
-        }
-
-        private void OnAnimatorMove()
-        {
-            /*
-            Callback for processing animation movements for modifying
-            root motion.
-
-            This callback will be invoked at each frame after
-            the state machines and the animations have been evaluated,
-            but before OnAnimatorIK.
-            */
-            animator.rootPosition = agent.nextPosition;
-            transform.position = agent.nextPosition;
+                Stop();
         }
 #endregion  Main Methods
 
 #region     Helper Methods
-        private void InitAttackBehaviour()
-        {
+        private void CheckOnUI() {
+            isOnUI = EventSystem.current.IsPointerOverGameObject();
+        }
+
+        private void InitAttackBehaviour() {
             foreach(AttackBehaviour behaviour in attackBehaviours)
-            {
                 behaviour.targetMask = targetMask;
-            }
         }
 
-        private void CheckAttackBehaviour()
-        {
-            if(CurrentAttackBehaviour == null || !CurrentAttackBehaviour.IsAvailable)
-            {
-                CurrentAttackBehaviour = null;
-                foreach(AttackBehaviour behaviour in attackBehaviours)
-                {
-                    if(behaviour.IsAvailable)
-                    {
-                        if( (CurrentAttackBehaviour == null) || (CurrentAttackBehaviour.priority < behaviour.priority))
-                        {
-                            CurrentAttackBehaviour = behaviour;
-                        }
-                    }
-                }
-            }
+        private bool CheckMoveInput() {
+            if( Input.GetAxis("Horizontal") != 0 ||
+                Input.GetAxis("Vertical") != 0)
+                return true;
+            else
+                return false;
         }
 
-        void SetTarget(Transform newTarget)
-        {
-            target = newTarget;
+        private void Move() {
+            Vector3 dir = Vector3.zero;
 
-            agent.stoppingDistance = CurrentAttackBehaviour?.range ?? defaultStoppingDistance;
-            agent.updateRotation = false;
-            agent.SetDestination(newTarget.transform.position);
+            dir = mainCamera.transform.forward * Input.GetAxis("Vertical") +
+                mainCamera.transform.right * Input.GetAxis("Horizontal");
+            dir.y = 0;
+            dir = dir.normalized;
+
+            animator.SetBool(moveHash, true);
+            transform.rotation = Quaternion.LookRotation(dir);
+            rigidbody_.MovePosition(transform.position + dir * moveSpeed * Time.deltaTime);
         }
 
-        void RemoveTarget()
-        {
-            target = null;
-
-            agent.stoppingDistance = defaultStoppingDistance;
-            agent.updateRotation = true;
+        private void Stop() {
+            animator.SetBool(moveHash, false);
+            rigidbody_.velocity = Vector3.zero;
         }
 
-        void AttackTarget()
-        {
-            if(CurrentAttackBehaviour == null)
-            {
-                return;
-            }
-
-            if(target != null && !IsInAttackState && CurrentAttackBehaviour.IsAvailable)
-            {
-                float distance = Vector3.Distance(transform.position, target.transform.position);
-                if(distance <= CurrentAttackBehaviour?.range)
-                {
-                    animator.SetInteger(attackIndexHash, CurrentAttackBehaviour.animationIndex);
-                    animator.SetTrigger(attackTriggerHash);
-                }
-            }
+        private bool CheckAttackInput() {
+            // UI위에 커서가 위치하면 공격이 나가지 않도록.
+            if( (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) &&
+                !IsInAttackState && !isOnUI)
+                return true;
+            else
+                return false;
         }
 
-        void FaceToTarget()
-        {
-            if(target != null)
-            {
-                Vector3 direction = (target.transform.position - transform.position).normalized;
-                //Debug.Log("x : " + direction.x + " | z : " + direction.z);
-                if(direction.x != 0 && direction.z != 0)
-                {
-                    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10.0f);
-                }
-            }
+        private void Attack(int attackIndex) {
+            animator.SetInteger(attackIndexHash, attackIndex);
+            animator.SetTrigger(attackTriggerHash);
         }
 #endregion  Helper Methods
 
 #region     IAttackable Interfaces
-        public AttackBehaviour CurrentAttackBehaviour
-        {
+        public AttackBehaviour CurrentAttackBehaviour {
             get;
             private set;
         }
 
-        public void OnExecuteAttack(int attackIndex)
-        {
-            if(CurrentAttackBehaviour != null && target != null)
-            {
-                CurrentAttackBehaviour.ExecuteAttack(target.gameObject);
-            }
+        public void OnExecuteAttack(int attackIndex) {
+            attackBehaviours[attackIndex].ExecuteAttack();
         }
 #endregion  IAttackable Ingerfaces
 
 #region     IDamagable Interfaces
         public bool IsAlive => hp > 0;
 
-        public void TakeDamage(int damage, GameObject damageEffectPrefab)
-        {
+        public void TakeDamage(int damage, GameObject damageEffectPrefab) {
             Debug.Log("Player TakeDamage : " + damage);
-            if(!IsAlive)
-            {
-                return;
-            }
+
+            if(!IsAlive) return;
 
             hp -= damage;
 
             if(damageEffectPrefab != null)
-            {
                 Instantiate<GameObject>(damageEffectPrefab, hitPoint);
-            }
 
             if(IsAlive)
-            {
                 animator?.SetTrigger(hitTriggerHash);
-            }
             else
-            {
                 animator?.SetBool(isAliveHash, false);
-            }
         }
 #endregion  IDamagable Interfaces
-    }
-}
+    } // class PlayerControl
+} // namespace

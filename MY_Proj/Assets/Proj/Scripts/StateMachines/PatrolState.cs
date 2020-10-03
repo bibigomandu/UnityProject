@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using Proj.CharacterControls;
 
-namespace Proj.StateMachines
-{
-    public class PatrolState : State<EnemyControllerLich>
-    {
+namespace Proj.StateMachines {
+    public class PatrolState : State<EnemyControllerLich> {
         private Animator animator;
         private CharacterController controller;
         private NavMeshAgent agent;
@@ -17,75 +15,54 @@ namespace Proj.StateMachines
         private int hashMove = Animator.StringToHash("Move");
         private int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
 
-        public override void OnInitialized()
-        {
+        public override void OnInitialized() {
             animator = context.GetComponent<Animator>();
             controller = context.GetComponent<CharacterController>();
             agent = context.GetComponent<NavMeshAgent>();
         }
 
-        public override void OnEnter()
-        {
+        public override void OnEnter() {
             if(context?.targetWaypoint == null)
-            {
                 context?.FindNextWaypoint();
-            }
 
-            if(context?.targetWaypoint != null)
-            {
+            if(context?.targetWaypoint != null) {
                 Vector3 destination = context.targetWaypoint.position;
                 agent?.SetDestination(destination);
                 animator?.SetBool(hashMove, true);
             }
         }
 
-        public override void Update(float deltaTime)
-        {
+        public override void Update(float deltaTime) {
             Transform enemy = context.SearchEnemy();
 
-            if(enemy)
-            {
+            if(enemy) {
                 if(context.IsAvailableAttack)
-                {
                     stateMachine.ChangeState<AttackState>();
-                }
                 else
-                {
                     stateMachine.ChangeState<MoveState>();
-                }
-            }
-            else
-            {
-                if(!agent.pathPending && (agent.remainingDistance <= agent.stoppingDistance))
-                {
+            } else {
+                if(!agent.pathPending && (agent.remainingDistance <= agent.stoppingDistance)) {
                     context.FindNextWaypoint();
                     stateMachine.ChangeState<IdleState>();
-                }
-                else
-                {
+                } else {
                     controller.Move(agent.velocity * Time.deltaTime);
                     animator.SetFloat(hashMoveSpeed, agent.velocity.magnitude / agent.speed, 0.1f, Time.deltaTime);
                 }
             }
         }
 
-        public override void OnExit()
-        {
+        public override void OnExit() {
             animator?.SetBool(hashMove, false);
             agent.ResetPath();
         }
 
-        private void FindNextWaypoint()
-        {
+        private void FindNextWaypoint() {
             Transform targetWaypoint = context.FindNextWaypoint();
             if(targetWaypoint != null)
-            {
                 agent?.SetDestination(targetWaypoint.position);
-            }
         }
 
-        public override string GetStateName()
-        {
+        public override string GetStateName() {
             return "Patrol";
         }
     } // class PatrolState

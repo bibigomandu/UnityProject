@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Proj.UIs
-{
-    public class CameFacing : MonoBehaviour
-    {
+namespace Proj.UIs {
+    public class CameFacing : MonoBehaviour {
         Camera refCamera;
         public bool reverseFace = false; // 반전 여부.
-        public enum Axis // 빌보드 회전 기준.
-        {
+        public enum Axis { // 빌보드 회전 기준.
             up, down, left, right, forward, back
         };
         public Axis axis = Axis.up;
@@ -30,16 +27,12 @@ namespace Proj.UIs
             }
         }
 
-        void Awake()
-        {
+        void Awake() {
             if(!refCamera)
-            {
                 refCamera = Camera.main;
-            }
         }
 
-        private void LateUpdate()
-        {
+        private void LateUpdate() {
             Vector3 targetPos = transform.position + refCamera.transform.rotation * (reverseFace ? Vector3.forward : Vector3.back);
             Vector3 targetOrientation = refCamera.transform.rotation * GetAxis(axis);
 

@@ -7,10 +7,8 @@ using Proj.CharacterControls.AttackBehaviours;
 using Proj.CharacterControls.States;
 using Proj.StateMachines;
 
-namespace Proj.CharacterControls
-{
-    public class CharacterControllerCharacterControl : MonoBehaviour, IAttackable, IDamagable
-    {
+namespace Proj.CharacterControls {
+    public class CharacterControllerCharacterControl : MonoBehaviour, IAttackable, IDamagable {
 #region
         public List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
         private CharacterController characterController;
@@ -41,8 +39,7 @@ namespace Proj.CharacterControls
 #endregion  Animator Hashes
 
 #region     Main Methods
-        void Start()
-        {
+        void Start() {
             characterController = GetComponent<CharacterController>();
             agent = GetComponent<NavMeshAgent>();
 
@@ -57,72 +54,55 @@ namespace Proj.CharacterControls
         }
 
         // Update is called once per frame
-        void Update()
-        {
-            if(!IsAlive)
-            {
-                return;
-            }
+        void Update() {
+            if(!IsAlive) return;
 
             CheckAttackBehaviour();
 
             // Left button.
-            if(Input.GetMouseButtonDown(0) && !IsInAttackState)
-            {
+            if(Input.GetMouseButtonDown(0) && !IsInAttackState) {
                 // Get world position corresponding to mouse pointer.
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if(Physics.Raycast(ray, out hit, 300, groundLayerMask))
-                {
+                if(Physics.Raycast(ray, out hit, 300, groundLayerMask)) {
                     RemoveTarget();
 
                     agent.SetDestination(hit.point);
 
-                    if(mouseEffectPrefab != null)
-                    {
+                    if(mouseEffectPrefab != null) {
                         GameObject attackEffectGO = GameObject.Instantiate<GameObject>(mouseEffectPrefab, hit.point, Quaternion.identity);
                         Destroy(attackEffectGO, mouseEffectTime);
                     }
                 }
             }
-            else if(Input.GetMouseButtonDown(1)) // Right button.
-            {
+            else if(Input.GetMouseButtonDown(1)) { // Right button.
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if(Physics.Raycast(ray, out hit, 300))
-                {
+                if(Physics.Raycast(ray, out hit, 300)) {
                     IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+
                     if(damagable != null && damagable.IsAlive)
-                    {
                         SetTarget(hit.collider.transform);
-                    }
                 }
             }
 
-            if(target != null)
-            {
+            if(target != null) {
                 if(!(target.GetComponent<IDamagable>()?.IsAlive ?? false))
-                {
                     RemoveTarget();
-                }
-                else
-                {
+                else {
                     agent.SetDestination(target.position);
                     FaceToTarget();
                 }
             }
 
             // Animation 제어.
-            if(agent.remainingDistance > agent.stoppingDistance)
-            {
+            if(agent.remainingDistance > agent.stoppingDistance) {
                 characterController.Move(agent.velocity * Time.deltaTime);
                 animator.SetFloat(moveSpeedHash, agent.velocity.magnitude / agent.speed, .1f, Time.deltaTime);
                 animator.SetBool(moveHash, true);
-            }
-            else
-            {
+            } else {
                 characterController.Move(agent.velocity * Time.deltaTime);
                 animator.SetFloat(moveSpeedHash, 0);
                 animator.SetBool(moveHash, false);
@@ -130,19 +110,14 @@ namespace Proj.CharacterControls
             }
 
             if (agent.isOnOffMeshLink)
-            {
                 animator.SetBool(fallingHash, agent.velocity.y != 0.0f);
-            }
             else
-            {
                 animator.SetBool(fallingHash, false);
-            }
 
             AttackTarget();
         }
 
-        private void OnAnimatorMove()
-        {
+        private void OnAnimatorMove() {
             /*
             Callback for processing animation movements for modifying
             root motion.
@@ -157,34 +132,24 @@ namespace Proj.CharacterControls
 #endregion  Main Methods
 
 #region     Helper Methods
-        private void InitAttackBehaviour()
-        {
+        private void InitAttackBehaviour() {
             foreach(AttackBehaviour behaviour in attackBehaviours)
-            {
                 behaviour.targetMask = targetMask;
-            }
         }
 
-        private void CheckAttackBehaviour()
-        {
-            if(CurrentAttackBehaviour == null || !CurrentAttackBehaviour.IsAvailable)
-            {
+        private void CheckAttackBehaviour() {
+            if(CurrentAttackBehaviour == null || !CurrentAttackBehaviour.IsAvailable) {
                 CurrentAttackBehaviour = null;
+
                 foreach(AttackBehaviour behaviour in attackBehaviours)
-                {
                     if(behaviour.IsAvailable)
-                    {
-                        if( (CurrentAttackBehaviour == null) || (CurrentAttackBehaviour.priority < behaviour.priority))
-                        {
+                        if( (CurrentAttackBehaviour == null) ||
+                            (CurrentAttackBehaviour.priority < behaviour.priority))
                             CurrentAttackBehaviour = behaviour;
-                        }
-                    }
-                }
             }
         }
 
-        void SetTarget(Transform newTarget)
-        {
+        void SetTarget(Transform newTarget) {
             target = newTarget;
 
             agent.stoppingDistance = CurrentAttackBehaviour?.range ?? defaultStoppingDistance;
@@ -192,40 +157,31 @@ namespace Proj.CharacterControls
             agent.SetDestination(newTarget.transform.position);
         }
 
-        void RemoveTarget()
-        {
+        void RemoveTarget() {
             target = null;
 
             agent.stoppingDistance = defaultStoppingDistance;
             agent.updateRotation = true;
         }
 
-        void AttackTarget()
-        {
-            if(CurrentAttackBehaviour == null)
-            {
-                return;
-            }
+        void AttackTarget() {
+            if(CurrentAttackBehaviour == null) return;
 
-            if(target != null && !IsInAttackState && CurrentAttackBehaviour.IsAvailable)
-            {
+            if(target != null && !IsInAttackState && CurrentAttackBehaviour.IsAvailable) {
                 float distance = Vector3.Distance(transform.position, target.transform.position);
-                if(distance <= CurrentAttackBehaviour?.range)
-                {
+
+                if(distance <= CurrentAttackBehaviour?.range) {
                     animator.SetInteger(attackIndexHash, CurrentAttackBehaviour.animationIndex);
                     animator.SetTrigger(attackTriggerHash);
                 }
             }
         }
 
-        void FaceToTarget()
-        {
-            if(target != null)
-            {
+        void FaceToTarget() {
+            if(target != null) {
                 Vector3 direction = (target.transform.position - transform.position).normalized;
                 //Debug.Log("x : " + direction.x + " | z : " + direction.z);
-                if(direction.x != 0 && direction.z != 0)
-                {
+                if(direction.x != 0 && direction.z != 0) {
                     Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10.0f);
                 }
@@ -234,47 +190,34 @@ namespace Proj.CharacterControls
 #endregion  Helper Methods
 
 #region     IAttackable Interfaces
-        public AttackBehaviour CurrentAttackBehaviour
-        {
+        public AttackBehaviour CurrentAttackBehaviour {
             get;
             private set;
         }
 
-        public void OnExecuteAttack(int attackIndex)
-        {
+        public void OnExecuteAttack(int attackIndex) {
             if(CurrentAttackBehaviour != null && target != null)
-            {
                 CurrentAttackBehaviour.ExecuteAttack(target.gameObject);
-            }
         }
 #endregion  IAttackable Ingerfaces
 
 #region     IDamagable Interfaces
         public bool IsAlive => hp > 0;
 
-        public void TakeDamage(int damage, GameObject damageEffectPrefab)
-        {
+        public void TakeDamage(int damage, GameObject damageEffectPrefab) {
             Debug.Log("Player TakeDamage : " + damage);
-            if(!IsAlive)
-            {
-                return;
-            }
+
+            if(!IsAlive) return;
 
             hp -= damage;
 
             if(damageEffectPrefab != null)
-            {
                 Instantiate<GameObject>(damageEffectPrefab, hitPoint);
-            }
 
             if(IsAlive)
-            {
                 animator?.SetTrigger(hitTriggerHash);
-            }
             else
-            {
                 animator?.SetBool(isAliveHash, false);
-            }
         }
 #endregion  IDamagable Interfaces
     }

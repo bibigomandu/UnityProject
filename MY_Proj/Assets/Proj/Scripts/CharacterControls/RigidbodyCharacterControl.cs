@@ -21,8 +21,7 @@ namespace Proj.CharacterControls
         private float jumpCheckDist = 1.1f;
         public LayerMask groundLayerMask;
 
-        void Start()
-        {
+        void Start() {
             // Rigidbody를 이용해 제어하기 위해 Character의 Rigidbody를 받아온다.
             characterRigidbody = this.gameObject.GetComponent<Rigidbody>();
             // 'this.gameObject.' 은 생략가능.
@@ -33,8 +32,7 @@ namespace Proj.CharacterControls
 
         }
 
-        void Update()
-        {
+        void Update() {
             // 전후좌우.
             inputVector3 = Vector3.zero;
             inputVector3.x = Input.GetAxis("Horizontal");
@@ -45,14 +43,12 @@ namespace Proj.CharacterControls
             // if(inputVector3 != Vector3.zero)    transform.forward = inputVector3;
 
             // 점프.
-            if(Input.GetButtonDown("Jump") && CheckCanJump())
-            {
+            if(Input.GetButtonDown("Jump") && CheckCanJump()) {
                 characterRigidbody.AddForce(Vector3.up * jumpPower * -0.1f * Physics.gravity.y, ForceMode.VelocityChange);
             }
 
             // 대쉬.
-            if(Input.GetButtonDown("Dash"))
-            {
+            if(Input.GetButtonDown("Dash")) {
                 characterRigidbody.AddForce(characterTransform.forward * dashDist, ForceMode.VelocityChange);
             }
 
@@ -60,19 +56,14 @@ namespace Proj.CharacterControls
             characterRigidbody.MovePosition(characterRigidbody.position + inputVector3 * moveSpeed * Time.deltaTime);
         }
 
-        bool CheckCanJump()
-        {
+        bool CheckCanJump() {
             RaycastHit jumpHit;
 
             // 캐릭터의 position(이번 경우는 중심)에서 아래로 쏴서 Ground 레이어에 닿는지 확인.
             if(Physics.Raycast(characterTransform.position, Vector3.down, out jumpHit, jumpCheckDist, groundLayerMask))
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
     }
 }

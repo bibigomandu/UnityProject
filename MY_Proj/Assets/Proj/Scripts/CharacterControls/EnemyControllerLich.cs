@@ -17,7 +17,7 @@ namespace Proj.CharacterControls
         public List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
         public Transform hitTransform;
         public EnemyUI hpBar;
-        public int maxHealth = 100;
+        public int maxHealth = 50;
         public int health;
         public int Health {
             get;
@@ -43,15 +43,13 @@ namespace Proj.CharacterControls
 
 #region Unity Methods
         // Start is called before the first frame update
-        void Start()
-        {
+        void Start() {
             health = maxHealth;
 
-            if(hpBar != null)
-            {
+            if(hpBar != null) {
                 hpBar = hpBar.GetComponent<EnemyUI>();
-                if(hpBar != null)
-                {
+
+                if(hpBar != null) {
                     hpBar.MinimumValue = 0.0f;
                     hpBar.MaximumValue = maxHealth;
                     hpBar.value = health;
@@ -72,15 +70,13 @@ namespace Proj.CharacterControls
             fov = this.gameObject.GetComponent<FieldOfVision>();
         }
 
-        public R ChangeState<R>() where R : State<EnemyControllerLich>
-        {
+        public R ChangeState<R>() where R : State<EnemyControllerLich> {
             return stateMachine.ChangeState<R>();
         }
 
         // Update is called once per frame
         // 에너미의 행동은 각 State의 Update에서 처리하고 이 스크립트에서는 현 상태의 Update 함수를 호출.
-        void Update()
-        {
+        void Update() {
             CheckAttackBehaviour();
 
             float elapsedTime = Time.deltaTime;
@@ -90,14 +86,9 @@ namespace Proj.CharacterControls
             // Debug.Log("state : " + stateMachine.GetCurrentStateName());
         }
 
-        public bool IsAvailableAttack
-        {
-            get
-            {
-                if(!Target)
-                {
-                    return false;
-                }
+        public bool IsAvailableAttack {
+            get {
+                if(!Target) return false;
 
                 float distance = Vector3.Distance(transform.position, Target.position);
 
@@ -105,13 +96,11 @@ namespace Proj.CharacterControls
             }
         }
 
-        public Transform SearchEnemy()
-        {
+        public Transform SearchEnemy() {
             return Target;
         }
 
-        private void OnDrawGizmos()
-        {
+        private void OnDrawGizmos() {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, viewRadius);
 
@@ -119,14 +108,11 @@ namespace Proj.CharacterControls
             Gizmos.DrawWireSphere(transform.position, attackRange);
         }
 
-        public Transform FindNextWaypoint()
-        {
+        public Transform FindNextWaypoint() {
             targetWaypoint = null;
             
             if(waypoints.Length > 0)
-            {
                 targetWaypoint = waypoints[waypointIndex];
-            }
 
             waypointIndex = (waypointIndex + 1) % waypoints.Length;
             
@@ -137,9 +123,8 @@ namespace Proj.CharacterControls
 #region Helper Methods
         private void InitAttackBehaviour() {
             foreach (AttackBehaviour behaviour in attackBehaviours) {
-                if(CurrentAttackBehaviour == null) {
+                if(CurrentAttackBehaviour == null)
                     CurrentAttackBehaviour = behaviour;
-                }
 
                 behaviour.targetMask = TargetMask;
             }
@@ -148,29 +133,22 @@ namespace Proj.CharacterControls
         private void CheckAttackBehaviour() {
             CurrentAttackBehaviour = null;
 
-            foreach(AttackBehaviour behaviour in attackBehaviours)
-            {
+            foreach(AttackBehaviour behaviour in attackBehaviours) {
                 if(behaviour.IsAvailable)
-                {
-                    if(CurrentAttackBehaviour == null || CurrentAttackBehaviour.priority < behaviour.priority) {
+                    if(CurrentAttackBehaviour == null || CurrentAttackBehaviour.priority < behaviour.priority)
                         CurrentAttackBehaviour = behaviour;
-                    }
-                }
             }
         }
 #endregion Helper Methods
 
 #region IAttackable Interfaces
-        public AttackBehaviour CurrentAttackBehaviour
-        {
+        public AttackBehaviour CurrentAttackBehaviour {
             get;
             private set;
         }
 
-        public void OnExecuteAttack(int attackIndex)
-        {
-            if(CurrentAttackBehaviour != null && Target != null)
-            {
+        public void OnExecuteAttack(int attackIndex) {
+            if(CurrentAttackBehaviour != null && Target != null) {
                 projectilePoint = transform;
                 CurrentAttackBehaviour.ExecuteAttack(Target.gameObject, projectilePoint);
             }
@@ -181,29 +159,23 @@ namespace Proj.CharacterControls
         public bool IsAlive => (health > 0);
 
         public void TakeDamage(int damage, GameObject hitEffectPrefab) {
-            Debug.Log("Lich TakeDamage : " + damage);
             if(!IsAlive)    return;
 
             health -= damage;
 
-            if(hpBar)
-            {
+            if(hpBar) {
                 hpBar.value = health;
                 hpBar.TakeDamage(damage);
             }
 
-            if(hitEffectPrefab)
-            {
+            if(hitEffectPrefab) {
                 Instantiate(hitEffectPrefab, hitTransform);
             }
 
-            if(IsAlive) {
+            if(IsAlive)
                 animator?.SetTrigger(hitTriggerHash);
-            }
-            else 
-            {
+            else
                 stateMachine.ChangeState<DeadState>();
-            }
         }
 #endregion IDamagable Interfaces
     }

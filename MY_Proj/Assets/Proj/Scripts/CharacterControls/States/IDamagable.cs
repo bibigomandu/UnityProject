@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Proj.CharacterControls.States
-{
-    public interface IDamagable
-    {
-        bool IsAlive
-        {
+namespace Proj.CharacterControls.States {
+    public interface IDamagable {
+        bool IsAlive {
             get;
         }
 

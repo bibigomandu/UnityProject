@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using Proj.CharacterControls;
 
-namespace Proj.StateMachines
-{
-    public class MoveState : State<EnemyControllerLich>
-    {
+namespace Proj.StateMachines {
+    public class MoveState : State<EnemyControllerLich> {
         private Animator animator;
         private CharacterController controller;
         private NavMeshAgent agent;
@@ -15,30 +13,25 @@ namespace Proj.StateMachines
         private int hashMove = Animator.StringToHash("Move");
         private int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
 
-        public override void OnInitialized()
-        {
+        public override void OnInitialized() {
             animator = context.GetComponent<Animator>();
             controller = context.GetComponent<CharacterController>();
             agent = context.GetComponent<NavMeshAgent>();
         }
 
-        public override void OnEnter()
-        {
+        public override void OnEnter() {
             agent?.SetDestination(context.Target.position);
             animator?.SetBool(hashMove, true);
         }
 
-        public override void Update(float deltaTime)
-        {
+        public override void Update(float deltaTime) {
             // enemy의 enemy. 즉, player.
             Transform enemy = context.SearchEnemy();
 
-            if(enemy)
-            {
+            if(enemy) {
                 agent.SetDestination(context.Target.position);
 
-                if(agent.remainingDistance > agent.stoppingDistance)
-                {
+                if(agent.remainingDistance > agent.stoppingDistance) {
                     controller.Move(agent.velocity * deltaTime);
                     animator.SetFloat(hashMoveSpeed, agent.velocity.magnitude / agent.speed, 1f, deltaTime);
                     return;
@@ -48,15 +41,13 @@ namespace Proj.StateMachines
             stateMachine.ChangeState<IdleState>();
         }
 
-        public override void OnExit()
-        {
+        public override void OnExit() {
             animator?.SetBool(hashMove, false);
             animator?.SetFloat(hashMoveSpeed, 0f);
             agent.ResetPath();
         }
 
-        public override string GetStateName()
-        {
+        public override string GetStateName() {
             return "MOVE";
         }
     } // class MoveState

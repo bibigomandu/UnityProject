@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Proj.CharacterControls.AttackBehaviours
-{
-    public abstract class AttackBehaviour : MonoBehaviour
-    {
+namespace Proj.CharacterControls.AttackBehaviours {
+    public abstract class AttackBehaviour : MonoBehaviour {
 #if UNITY_EDITOR
         [Multiline]
         public string devDescription = "description!";
@@ -22,18 +20,14 @@ namespace Proj.CharacterControls.AttackBehaviours
         public bool IsAvailable => calcCoolTime >= coolTime;
 
         // Start is called before the first frame update
-        protected virtual void Start()
-        {
+        protected virtual void Start() {
             calcCoolTime = coolTime;
         }
 
         // Update is called once per frame
-        void Update()
-        {
+        void Update() {
             if(calcCoolTime < coolTime)
-            {
                 calcCoolTime += Time.deltaTime;
-            }
         }
 
         public abstract void ExecuteAttack(GameObject target = null, Transform startPoint = null);

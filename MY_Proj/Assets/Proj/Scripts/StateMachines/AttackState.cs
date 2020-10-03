@@ -4,25 +4,21 @@ using UnityEngine;
 using Proj.CharacterControls;
 using Proj.CharacterControls.States;
 
-namespace Proj.StateMachines
-{
-    public class AttackState : State<EnemyControllerLich>
-    {
+namespace Proj.StateMachines {
+    public class AttackState : State<EnemyControllerLich> {
         private Animator animator;
         private AttackStateController attackStateController;
         private IAttackable attackable;
         private int hashAttack = Animator.StringToHash("Attack");
         protected int hashAttackIndex = Animator.StringToHash("AttackIndex");
 
-        public override void OnInitialized()
-        {
+        public override void OnInitialized() {
             animator = context.GetComponent<Animator>();
             attackStateController = context.GetComponent<AttackStateController>();
             attackable = context.GetComponent<IAttackable>();
         }
 
-        public override void OnEnter()
-        {
+        public override void OnEnter() {
             if(attackable == null || attackable.CurrentAttackBehaviour == null) {
                 stateMachine.ChangeState<IdleState>();
                 return;
@@ -39,30 +35,25 @@ namespace Proj.StateMachines
             animator?.SetTrigger(hashAttack);
         }
 
-        public override void Update(float deltaTime)
-        {
+        public override void Update(float deltaTime) {
             //
         }
 
-        public override void OnExit()
-        {
+        public override void OnExit() {
             attackStateController.enterAttackStateHandler -= OnEnterAttackState;
             attackStateController.exitAttackStateHandler -= OnExitAttackState;
         }
 
-        public void OnEnterAttackState()
-        {
+        public void OnEnterAttackState() {
             Debug.Log("OnEnterAttackState()");
         }
 
-        public void OnExitAttackState()
-        {
+        public void OnExitAttackState() {
             Debug.Log("OnExitAttackState()");
             stateMachine.ChangeState<IdleState>();
         }
 
-        public override string GetStateName()
-        {
+        public override string GetStateName() {
             return "ATTACK";
         }
     } // class AttackState

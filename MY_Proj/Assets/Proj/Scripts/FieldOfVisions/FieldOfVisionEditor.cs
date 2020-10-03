@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Proj.FieldOfVisions
-{
+namespace Proj.FieldOfVisions {
     [CustomEditor(typeof(FieldOfVision))]
-    public class FieldOfViewEditor : Editor
-    {
-        void OnSceneGUI()
-        {
+    public class FieldOfViewEditor : Editor {
+        void OnSceneGUI() {
             FieldOfVision fov = (FieldOfVision)target;
 
             // Draw view radius
@@ -24,18 +21,12 @@ namespace Proj.FieldOfVisions
 
             Handles.color = Color.red;
             foreach (Transform visibleTarget in fov.VisibleTargets)
-            {
                 if (fov.NearestTarget != visibleTarget)
-                {
                     Handles.DrawLine(fov.transform.position, visibleTarget.position);
-                }
-            }
 
             Handles.color = Color.green;
             if (fov.NearestTarget)
-            {
                 Handles.DrawLine(fov.transform.position, fov.NearestTarget.position);
-            }
         }
     }
 }

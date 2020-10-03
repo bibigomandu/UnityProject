@@ -98,6 +98,7 @@
      <Compile Include="Assets\Proj\Scripts\CharacterControls\States\IDamagable.cs" />
      <Compile Include="Assets\Proj\Scripts\FieldOfVisions\FieldOfVision.cs" />
      <Compile Include="Assets\Proj\Scripts\FieldOfVisions\FieldOfVisionEditor.cs" />
+     <Compile Include="Assets\Proj\Scripts\MouseControl.cs" />
      <Compile Include="Assets\Proj\Scripts\Projectiles\Projectile.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachineBehaviours\AttackStateMachineBehaviour.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachineBehaviours\IdleRandomStateMachineBehaviour.cs" />
@@ -117,6 +118,7 @@
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\GrainGen.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\FXAA3.cginc" />
+     <None Include="Assets\Imported\Flames Of The Phoenix\READ_ME.txt" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
@@ -128,13 +130,14 @@
      <None Include="Assets\Imported\NastyWizard_Depth\VertFog\PostProcessVertFog.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Water\WaterShaderAdv.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\TAA.cginc" />
+     <None Include="Assets\Imported\Casual Tiny Slime Character - NPC Pack\Readme.txt" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\AmbientOcclusion.cginc" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Editor Resources\Monitors\VectorscopeCompute.compute" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
-     <None Include="Assets\Cartoon Temple Building Kit\ReadMe.txt" />
+     <None Include="Assets\Imported\Cartoon Temple Building Kit\ReadMe.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\Imported\NastyWizard_Depth\Water\PostFunctions.cginc" />

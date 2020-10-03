@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Proj.CameraControls
-{
-    public class MainCameraControl : MonoBehaviour
-    {
+namespace Proj.CameraControls {
+    public class MainCameraControl : MonoBehaviour {
         [Header("Properties about camera control.")]
         [Range(2f, 4f)]
         public float distance = 3f;
@@ -17,7 +15,7 @@ namespace Proj.CameraControls
         public float characterStature = 2f;
 
         [Range(5f, 10f)]
-        public float rotateSpeed = 10.0f;
+        public float rotateSpeed = 7.0f;
         // 60 - 0(360) - 300
         private float downVerticalRotLimit = 60f;
         private float upVerticalRotLimit = 300f;
@@ -28,13 +26,11 @@ namespace Proj.CameraControls
         [Tooltip("Player")]
         public Transform target;
 
-        private void LateUpdate()
-        {
+        private void LateUpdate() {
             CameraControl();
         }
 
-        private void CameraControl()
-        {
+        private void CameraControl() {
             if(!target) return;
 
             ChangeDistance();
@@ -42,43 +38,39 @@ namespace Proj.CameraControls
             ChangePosition();
         }
 
-        private void ChangeDistance()
-        {
+        private void ChangeDistance() {
             // 마우스 휠을 스크롤해 카메라와 캐릭터 사이의 거리를 변경.
             float deltaDist = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-            distance += deltaDist;
+            distance -= deltaDist;
             if(distance < minDistance)  distance = minDistance;
             if(distance > maxDistance)  distance = maxDistance;
         }
 
-        private void ChangeRotation()
-        {
-            float deltaVerticalRot = Input.GetAxis("Mouse Y") * -1 * rotateSpeed;
-            float deltaHorizontalRot = Input.GetAxis("Mouse X") * rotateSpeed;
+        private void ChangeRotation() {
+            // 커서가 보이지 않을 때에만 회전.
+            if(Cursor.lockState == CursorLockMode.Locked) {
+                float deltaVerticalRot = Input.GetAxis("Mouse Y") * -1 * rotateSpeed;
+                float deltaHorizontalRot = Input.GetAxis("Mouse X") * rotateSpeed;
 
-            Vector3 rot = transform.rotation.eulerAngles;
-            rot.x += deltaVerticalRot;
-            rot.y += deltaHorizontalRot;
+                Vector3 rot = transform.rotation.eulerAngles;
+                rot.x += deltaVerticalRot;
+                rot.y += deltaHorizontalRot;
 
-            // rotation의 x(수직회전) 값을 지정된 범위를 벗어나지 않도록 처리.
-            // 60(downVerticalRotLimit) - 0(360) - 300(upVerticalRotLimit)
-            rot.x %= 360;
+                // rotation의 x(수직회전) 값을 지정된 범위를 벗어나지 않도록 처리.
+                // 60(downVerticalRotLimit) - 0(360) - 300(upVerticalRotLimit)
+                rot.x %= 360;
 
-            if(downVerticalRotLimit < rot.x && rot.x <= 180)
-            {
-                rot.x = downVerticalRotLimit;
+                if(downVerticalRotLimit < rot.x && rot.x <= 180)
+                    rot.x = downVerticalRotLimit;
+                else if(180 <= rot.x && rot.x < upVerticalRotLimit)
+                    rot.x = upVerticalRotLimit;
+                
+                Quaternion newRot = Quaternion.Euler(rot);
+                transform.rotation = newRot;
             }
-            else if(180 <= rot.x && rot.x < upVerticalRotLimit)
-            {
-                rot.x = upVerticalRotLimit;
-            }
-            
-            Quaternion newRot = Quaternion.Euler(rot);
-            transform.rotation = newRot;
         }
 
-        private void ChangePosition()
-        {
+        private void ChangePosition() {
             // 카메라가 캐릭터를 뒤에서 바라보도록 position 변경.
             Vector3 normRot = transform.forward.normalized;
             Vector3 positionDiff = normRot * -distance;
