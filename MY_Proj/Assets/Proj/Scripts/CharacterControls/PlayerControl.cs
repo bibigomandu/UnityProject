@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using Proj.CharacterControls.AttackBehaviours;
 using Proj.CharacterControls.States;
 using Proj.StateMachines;
+using Proj.UIs;
 
 namespace Proj.CharacterControls {
     public class PlayerControl : MonoBehaviour, IAttackable, IDamagable {
@@ -17,10 +18,12 @@ namespace Proj.CharacterControls {
         public LayerMask targetMask;
         private Transform hitPoint;
         private Rigidbody rigidbody_;
+        public GameObject HPBarObj;
+        private HPBarControl HPBar;
 
         bool isOnUI; // UI위에 마우스 커서가 위치했는지.
-        public float maxHp = 100.0f;
-        public float hp;
+        public float maxHP = 100.0f;
+        public float HP;
         [Range(15f, 30f)]
         public float moveSpeed = 20f;
         public bool IsInAttackState => GetComponent<AttackStateController>()?.IsInAttackState ?? false;
@@ -39,8 +42,10 @@ namespace Proj.CharacterControls {
         void Start() {
             rigidbody_ = GetComponent<Rigidbody>();
             mainCamera = Camera.main;
-            hp = maxHp;
+            HP = maxHP;
+            HPBar = HPBarObj.GetComponent<HPBarControl>();
 
+            InitHPBar();
             InitAttackBehaviour();
         }
 
@@ -116,6 +121,22 @@ namespace Proj.CharacterControls {
             animator.SetInteger(attackIndexHash, attackIndex);
             animator.SetTrigger(attackTriggerHash);
         }
+
+        private void InitHPBar() {
+            if(HPBar != null) {
+                HPBar.SetMaxValue(maxHP);
+                HPBar.SetValue(HP);
+                Debug.Log("Get Max HP : " + HPBar.GetMaxValue());
+                Debug.Log("Get HP : " + HPBar.GetValue());
+            }
+        }
+
+        private void SetHPBar() {
+            if(HPBar != null) {
+                HPBar.SetValue(HP);
+                Debug.Log("Get HP : " + HPBar.GetValue());
+            }
+        }
 #endregion  Helper Methods
 
 #region     IAttackable Interfaces
@@ -130,14 +151,14 @@ namespace Proj.CharacterControls {
 #endregion  IAttackable Ingerfaces
 
 #region     IDamagable Interfaces
-        public bool IsAlive => hp > 0;
+        public bool IsAlive => HP > 0;
 
         public void TakeDamage(int damage, GameObject damageEffectPrefab) {
             Debug.Log("Player TakeDamage : " + damage);
 
             if(!IsAlive) return;
 
-            hp -= damage;
+            HP -= damage;
 
             if(damageEffectPrefab != null)
                 Instantiate<GameObject>(damageEffectPrefab, hitPoint);
@@ -146,6 +167,8 @@ namespace Proj.CharacterControls {
                 animator?.SetTrigger(hitTriggerHash);
             else
                 animator?.SetBool(isAliveHash, false);
+
+            SetHPBar();
         }
 #endregion  IDamagable Interfaces
     } // class PlayerControl

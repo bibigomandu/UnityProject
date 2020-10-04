@@ -27,8 +27,6 @@ namespace Proj.StateMachines {
             attackStateController.enterAttackStateHandler += OnEnterAttackState;
             attackStateController.exitAttackStateHandler += OnExitAttackState;
 
-            Debug.Log("Attack index : " + attackable.CurrentAttackBehaviour.animationIndex);
-            Debug.Log("Cooltime : " + attackable.CurrentAttackBehaviour.calcCoolTime + " / " + attackable.CurrentAttackBehaviour.coolTime);
             context.OnExecuteAttack(attackable.CurrentAttackBehaviour.animationIndex);
 
             animator?.SetInteger(hashAttackIndex, attackable.CurrentAttackBehaviour.animationIndex);
@@ -45,11 +43,11 @@ namespace Proj.StateMachines {
         }
 
         public void OnEnterAttackState() {
-            Debug.Log("OnEnterAttackState()");
+            //Debug.Log("OnEnterAttackState()");
         }
 
         public void OnExitAttackState() {
-            Debug.Log("OnExitAttackState()");
+            //Debug.Log("OnExitAttackState()");
             stateMachine.ChangeState<IdleState>();
         }
 

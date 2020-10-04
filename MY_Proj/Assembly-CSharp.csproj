@@ -86,6 +86,7 @@
      <Compile Include="Assets\Imported\NastyWizard_Depth\Water\PostProcessingWater.cs" />
      <Compile Include="Assets\Imported\NastyWizard_Depth\Water\WaterVolume.cs" />
      <Compile Include="Assets\Proj\Scripts\CameraControls\MainCameraControl.cs" />
+     <Compile Include="Assets\Proj\Scripts\CameraControls\MinimapCameraControl.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\AttackBehaviours\AttackBehaviour.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\AttackBehaviours\AttackBehaviourMelee.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\AttackBehaviours\AttackBehaviourProjectile.cs" />
@@ -112,6 +113,7 @@
      <Compile Include="Assets\Proj\Scripts\UIs\CameFacing.cs" />
      <Compile Include="Assets\Proj\Scripts\UIs\DamageText.cs" />
      <Compile Include="Assets\Proj\Scripts\UIs\EnemyUI.cs" />
+     <Compile Include="Assets\Proj\Scripts\UIs\HPBarControl.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
