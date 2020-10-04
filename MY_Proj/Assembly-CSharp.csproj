@@ -110,10 +110,10 @@
      <Compile Include="Assets\Proj\Scripts\StateMachines\MoveState.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\PatrolState.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachines\StateMachine.cs" />
+     <Compile Include="Assets\Proj\Scripts\UIs\BarControl.cs" />
      <Compile Include="Assets\Proj\Scripts\UIs\CameFacing.cs" />
      <Compile Include="Assets\Proj\Scripts\UIs\DamageText.cs" />
      <Compile Include="Assets\Proj\Scripts\UIs\EnemyUI.cs" />
-     <Compile Include="Assets\Proj\Scripts\UIs\HPBarControl.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Imported\NastyWizard_Depth\Demo\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

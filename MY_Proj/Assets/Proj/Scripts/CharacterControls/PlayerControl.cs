@@ -18,8 +18,7 @@ namespace Proj.CharacterControls {
         public LayerMask targetMask;
         private Transform hitPoint;
         private Rigidbody rigidbody_;
-        public GameObject HPBarObj;
-        private HPBarControl HPBar;
+        public BarControl HPBar;
 
         bool isOnUI; // UI위에 마우스 커서가 위치했는지.
         public float maxHP = 100.0f;
@@ -43,7 +42,6 @@ namespace Proj.CharacterControls {
             rigidbody_ = GetComponent<Rigidbody>();
             mainCamera = Camera.main;
             HP = maxHP;
-            HPBar = HPBarObj.GetComponent<HPBarControl>();
 
             InitHPBar();
             InitAttackBehaviour();
@@ -124,17 +122,19 @@ namespace Proj.CharacterControls {
 
         private void InitHPBar() {
             if(HPBar != null) {
-                HPBar.SetMaxValue(maxHP);
-                HPBar.SetValue(HP);
-                Debug.Log("Get Max HP : " + HPBar.GetMaxValue());
-                Debug.Log("Get HP : " + HPBar.GetValue());
+                HPBar = HPBar.GetComponent<BarControl>();
+
+                if(HPBar != null) {
+                    HPBar.MinimumValue = 0;
+                    HPBar.MaximumValue = maxHP;
+                    HPBar.value = HP;
+                }
             }
         }
 
         private void SetHPBar() {
             if(HPBar != null) {
-                HPBar.SetValue(HP);
-                Debug.Log("Get HP : " + HPBar.GetValue());
+                HPBar.value = HP;
             }
         }
 #endregion  Helper Methods

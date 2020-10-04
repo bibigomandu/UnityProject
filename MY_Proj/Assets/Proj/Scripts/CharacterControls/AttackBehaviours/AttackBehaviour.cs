@@ -19,13 +19,11 @@ namespace Proj.CharacterControls.AttackBehaviours {
         public float calcCoolTime = 0.0f;
         public LayerMask targetMask;
         public bool IsAvailable => calcCoolTime >= coolTime;
-        GameObject skillCoolBarObj;
-        public HPBarControl skillCoolBar;
+        public BarControl skillCoolBar;
 
         protected virtual void Start() {
             calcCoolTime = coolTime;
-            if(skillCoolBarObj != null)
-                skillCoolBar = skillCoolBarObj.GetComponent<HPBarControl>();
+            
             InitSkillCoolBar();
         }
 
@@ -40,14 +38,19 @@ namespace Proj.CharacterControls.AttackBehaviours {
                 
         private void InitSkillCoolBar() {
             if(skillCoolBar != null) {
-                skillCoolBar.SetMaxValue(coolTime);
-                skillCoolBar.SetValue(calcCoolTime);
+                skillCoolBar = skillCoolBar.GetComponent<BarControl>();
+
+                if(skillCoolBar != null) {
+                    skillCoolBar.MinimumValue = 0;
+                    skillCoolBar.MaximumValue = coolTime;
+                    skillCoolBar.value = calcCoolTime;
+                }
             }
         }
         
         private void SetSkillCoolBar() {
             if(skillCoolBar != null) {
-                skillCoolBar.SetValue(calcCoolTime);
+                skillCoolBar.value = calcCoolTime;
             }
         }
     } // class AttackBehaviour
