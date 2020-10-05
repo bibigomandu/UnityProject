@@ -97,9 +97,14 @@
      <Compile Include="Assets\Proj\Scripts\CharacterControls\RigidbodyCharacterControl.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\States\IAttackable.cs" />
      <Compile Include="Assets\Proj\Scripts\CharacterControls\States\IDamagable.cs" />
+     <Compile Include="Assets\Proj\Scripts\Dialogues\DialogueControl.cs" />
+     <Compile Include="Assets\Proj\Scripts\Dialogues\DialogueScript.cs" />
+     <Compile Include="Assets\Proj\Scripts\Dialogues\DialogueScriptDatabase.cs" />
+     <Compile Include="Assets\Proj\Scripts\Dialogues\DialogueUI.cs" />
      <Compile Include="Assets\Proj\Scripts\FieldOfVisions\FieldOfVision.cs" />
      <Compile Include="Assets\Proj\Scripts\FieldOfVisions\FieldOfVisionEditor.cs" />
      <Compile Include="Assets\Proj\Scripts\MouseControl.cs" />
+     <Compile Include="Assets\Proj\Scripts\Processivity.cs" />
      <Compile Include="Assets\Proj\Scripts\Projectiles\Projectile.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachineBehaviours\AttackStateMachineBehaviour.cs" />
      <Compile Include="Assets\Proj\Scripts\StateMachineBehaviours\IdleRandomStateMachineBehaviour.cs" />

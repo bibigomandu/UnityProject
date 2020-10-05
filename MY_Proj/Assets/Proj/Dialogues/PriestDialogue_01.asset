@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a51c15c6ae6d4d40a5e9209a449baff, type: 3}
+  m_Name: PriestDialogue_01
+  m_EditorClassIdentifier: 
+  requiredProcessivity: 2
+  NPCID: 2
+  dialogues:
+  - "-\uBD88\uC758 \uD798\uC73C\uB85C \uAC15\uC744 \uC9C0\uD0A4\uB294 \uACB0\uACC4\uAC00
+    \uD574\uC81C\uB418\uC5C8\uB2E4-"
+  - "\uC557 \uB728\uAC70."

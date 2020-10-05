@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerHPBar
+  - InteractableNPC
+  - DialogueUI
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,7 @@ using Proj.CharacterControls.AttackBehaviours;
 using Proj.CharacterControls.States;
 using Proj.StateMachines;
 using Proj.UIs;
+using Proj.Dialogues;
 
 namespace Proj.CharacterControls {
     public class PlayerControl : MonoBehaviour, IAttackable, IDamagable {
@@ -19,6 +20,8 @@ namespace Proj.CharacterControls {
         private Transform hitPoint;
         private Rigidbody rigidbody_;
         public BarControl HPBar;
+        private Transform prevNearestNPC;
+        private Transform nearestNPC;
 
         bool isOnUI; // UI위에 마우스 커서가 위치했는지.
         public float maxHP = 100.0f;
@@ -51,9 +54,13 @@ namespace Proj.CharacterControls {
             // 중력.
             // Rigidbody가 있음에도 중력이 적용이 안 되는 기현상.
             rigidbody_.AddForce(Vector3.down * 500f, ForceMode.Acceleration);
+
+            if(CheckDialogueON()) return;
             if(!IsAlive) return;
 
-            CheckOnUI();
+            CheckOnUI(); // 마우스 커서가 UI위에 있는지 확인.
+
+            if(CheckNPC()) return; // 대화를 시작하면 이후는 무시.
 
             if(CheckAttackInput()) {
                 Stop();
@@ -137,6 +144,51 @@ namespace Proj.CharacterControls {
                 HPBar.value = HP;
             }
         }
+
+        private bool CheckNPC() {
+            nearestNPC = null;
+            float dist = 0;
+		    Collider[] colls = Physics.OverlapSphere (transform.position, 3.0f);
+
+            // 가장 가까운 상호작용 가능한 NPC를 찾는다.
+            foreach(Collider coll in colls) {
+                if(coll.CompareTag("InteractableNPC")) {
+                    if(nearestNPC == null) {
+                        dist = Vector3.Distance(transform.position, coll.transform.position);
+                        nearestNPC = coll.transform;
+                    } else {
+                        if(Vector3.Distance(transform.position, coll.transform.position) < dist) {
+                            nearestNPC = coll.transform;
+                            dist = Vector3.Distance(transform.position, coll.transform.position);
+                        }
+                    }
+                }
+            }
+
+            // 대상이 변경되면 새로 버튼을 생성.
+            if(prevNearestNPC != nearestNPC) {
+                prevNearestNPC = nearestNPC;
+                if(nearestNPC != null) nearestNPC.GetComponent<DialogueControl>().ShowDialogueBtn();
+            }
+
+            // 대화시작.
+            if(nearestNPC != null) {
+                if(Input.GetKeyDown(KeyCode.F)) {
+                    nearestNPC.GetComponent<DialogueControl>().OpenDialogueUI();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool CheckDialogueON() {
+            GameObject obj = GameObject.FindWithTag("DialogueUI");
+
+            if(obj != null) return true;
+            else            return false;
+        }
+        //
 #endregion  Helper Methods
 
 #region     IAttackable Interfaces
